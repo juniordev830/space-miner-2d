@@ -33,3 +33,10 @@ npm run build
 - `.github/workflows/ci.yml`: execução de testes e build via GitHub Actions.
 
 **Limitações:** demonstração local, sem salvamento de progresso, áudio ou controles de toque nesta primeira versão. Visual autoral composto por formas geométricas. O projeto ainda não foi testado em todos os navegadores/dispositivos.
+
+
+## Combos de mineração (novo)
+
+Quebrar asteroides em sequência dentro de **8 segundos** mantém o multiplicador de combo. A sequência fica limitada a cinco asteroides: os dois primeiros não dão bônus, o terceiro e o quarto concedem **+1 minério**, e o quinto ou seguintes concedem **+2 minérios** por asteroide. O bônus entra no inventário e no progresso do objetivo. Quando o cronômetro acaba, o combo volta ao início.
+
+O indicador no HUD apresenta o multiplicador atual e o tempo restante; não existe necessidade de usar outro botão. Esse módulo está separado em `src/combo.js`, com testes `tests/combo.test.js` sobre limites, expiração e entradas inválidas. O combo é reiniciado ao recarregar a partida, assim como o restante do progresso.
