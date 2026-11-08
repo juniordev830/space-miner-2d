@@ -123,7 +123,7 @@ app.ticker.add((ticker) => {
   const dt = Math.min(ticker.deltaTime, 2);
   state.cooldown = Math.max(0, state.cooldown - ticker.deltaMS / 1000);
   const lastComboLabel = formatCombo(state.combo);
-  state.combo = advanceCombo(state.combo, Math.min(ticker.deltaMS / 1000, 0.1));
+  state.combo = advanceCombo(state.combo, Math.max(0, ticker.deltaMS / 1000));
   if (formatCombo(state.combo) !== lastComboLabel) comboEl.textContent = formatCombo(state.combo);
   let dx = Number(keys.has('d') || keys.has('arrowright')) - Number(keys.has('a') || keys.has('arrowleft'));
   let dy = Number(keys.has('s') || keys.has('arrowdown')) - Number(keys.has('w') || keys.has('arrowup'));
