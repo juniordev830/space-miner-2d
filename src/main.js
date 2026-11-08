@@ -1,5 +1,6 @@
 import { Application, Container, Graphics } from 'pixi.js';
 import { clamp, distance, inMiningRange, mineHit, canUpgrade } from './rules.js';
+import { advanceCombo, awardMiningCombo, formatCombo } from './combo.js';
 import './style.css';
 
 const app = new Application();
@@ -22,11 +23,15 @@ ship.circle(0, 5, 3).fill(0xffffff);
 field.addChild(ship);
 
 const keys = new Set();
-const state = { ore: 0, total: 0, laser: 1, cooldown: 0, complete: false };
+const state = {
+  ore: 0, total: 0, laser: 1, cooldown: 0, complete: false,
+  combo: { streak: 0, secondsRemaining: 0 }
+};
 const rocks = [];
 const oreEl = document.querySelector('#ore');
 const totalEl = document.querySelector('#total');
 const laserEl = document.querySelector('#laser');
+const comboEl = document.querySelector('#combo');
 const statusEl = document.querySelector('#status');
 const SHIP_SPEED = 4.1;
 const MINE_RANGE = 115;
@@ -36,6 +41,7 @@ function refreshHud(message) {
   oreEl.textContent = String(state.ore);
   totalEl.textContent = `${state.total} / ${GOAL}`;
   laserEl.textContent = `Nível ${state.laser}`;
+  comboEl.textContent = formatCombo(state.combo);
   if (message) statusEl.textContent = message;
 }
 
@@ -72,7 +78,9 @@ function mineNearest() {
   closest.durability = mineHit(closest.durability, state.laser);
   closest.view.tint = closest.durability ? 0xa8d9ff : 0xffffff;
   if (closest.durability === 0) {
-    const gained = Math.ceil(closest.radius / 11);
+    const baseOre = Math.ceil(closest.radius / 11);
+    state.combo = awardMiningCombo(state.combo, baseOre);
+    const gained = state.combo.totalOre;
     state.ore += gained;
     state.total += gained;
     field.removeChild(closest.view);
@@ -84,7 +92,9 @@ function mineNearest() {
       refreshHud('MISSÃO CONCLUÍDA! Pressione R para jogar novamente.');
       return;
     }
-    refreshHud(`Asteroide coletado: +${gained} minérios!`);
+    const bonusMessage = state.combo.bonusOre > 0
+      ? ` (${state.combo.bonusOre} de bônus por combo)` : '';
+    refreshHud(`Asteroide coletado: +${gained} minérios${bonusMessage}!`);
   } else {
     refreshHud('Laser atingiu o asteroide. Continue minerando!');
   }
@@ -112,6 +122,9 @@ refreshHud();
 app.ticker.add((ticker) => {
   const dt = Math.min(ticker.deltaTime, 2);
   state.cooldown = Math.max(0, state.cooldown - ticker.deltaMS / 1000);
+  const lastComboLabel = formatCombo(state.combo);
+  state.combo = advanceCombo(state.combo, Math.min(ticker.deltaMS / 1000, 0.1));
+  if (formatCombo(state.combo) !== lastComboLabel) comboEl.textContent = formatCombo(state.combo);
   let dx = Number(keys.has('d') || keys.has('arrowright')) - Number(keys.has('a') || keys.has('arrowleft'));
   let dy = Number(keys.has('s') || keys.has('arrowdown')) - Number(keys.has('w') || keys.has('arrowup'));
   if (dx !== 0 || dy !== 0) {
