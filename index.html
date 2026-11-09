@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#050d22"/>
+  <title>Space Miner 2D</title>
+</head>
+<body>
+  <div id="app"></div>
+  <aside class="hud">
+    <div class="eyebrow">ARCADE / MISSÃO 01</div>
+    <h1>SPACE MINER <span>2D</span></h1>
+    <div class="stat"><span>Minério disponível</span><strong id="ore">0</strong></div>
+    <div class="stat"><span>Minério total extraído</span><strong id="total">0 / 25</strong></div>
+    <div class="stat"><span>Laser de mineração</span><strong id="laser">Nível 1</strong></div>
+    <div class="stat"><span>Combo de mineração</span><strong id="combo">Sem combo</strong></div>
+    <p id="status" role="status" aria-live="polite">Aproxime-se dos asteroides e pressione Espaço.</p>
+    <div class="help"><b>WASD / Setas</b> mover<br/><b>Espaço</b> minerar<br/><b>U</b> melhorar laser (5 minérios)<br/><b>R</b> recomeçar</div>
+  </aside>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
