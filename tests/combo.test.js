@@ -5,6 +5,8 @@ import {
   awardMiningCombo,
   comboExpired,
   formatCombo,
+  nextComboBonus,
+  comboHudLabel,
   COMBO_WINDOW_SECONDS,
   MAX_COMBO_STREAK
 } from '../src/combo.js';
@@ -70,4 +72,16 @@ test('invalid ore amounts, durations, and streaks are rejected', () => {
   }
   assert.throws(() => awardMiningCombo({ streak: -1, secondsRemaining: 8 }, 1), RangeError);
   assert.throws(() => advanceCombo({ streak: 1, secondsRemaining: -2 }, 2), RangeError);
+});
+
+test('next streak reward is predictable and never mutates the live combo', () => {
+  const zero = { streak: 0, secondsRemaining: 0 };
+  const second = { streak: 2, secondsRemaining: 1.1 };
+  const maxed = { streak: MAX_COMBO_STREAK, secondsRemaining: 7 };
+  assert.equal(nextComboBonus(zero), 0);
+  assert.equal(nextComboBonus(second), 1);
+  assert.equal(nextComboBonus(maxed), 2);
+  assert.match(comboHudLabel(second), /Próx\. bônus \+1/);
+  assert.deepEqual(second, { streak: 2, secondsRemaining: 1.1 });
+  assert.throws(() => nextComboBonus({ streak: -1, secondsRemaining: 1 }), RangeError);
 });
