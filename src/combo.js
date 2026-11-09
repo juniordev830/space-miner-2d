@@ -42,3 +42,13 @@ export function formatCombo(state) {
   if (comboExpired(state)) return 'Sem combo';
   return `x${state.streak} • ${Math.ceil(state.secondsRemaining)}s`;
 }
+
+/** Bonus ore units from the next successful asteroid break, without mutation. */
+export function nextComboBonus(state) {
+  return awardMiningCombo(state, 1).bonusOre;
+}
+
+/** UI summary of the remaining time and the next attainable bonus. */
+export function comboHudLabel(state) {
+  return `${formatCombo(state)} | Próx. bônus +${nextComboBonus(state)}`;
+}
