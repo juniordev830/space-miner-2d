@@ -40,3 +40,7 @@ npm run build
 Quebrar asteroides em sequência dentro de **8 segundos** mantém o multiplicador de combo. A sequência fica limitada a cinco asteroides: os dois primeiros não dão bônus, o terceiro e o quarto concedem **+1 minério**, e o quinto ou seguintes concedem **+2 minérios** por asteroide. O bônus entra no inventário e no progresso do objetivo. Quando o cronômetro acaba, o combo volta ao início.
 
 O indicador no HUD apresenta o multiplicador atual e o tempo restante; não existe necessidade de usar outro botão. Esse módulo está separado em `src/combo.js`, com testes `tests/combo.test.js` sobre limites, expiração e entradas inválidas. O combo é reiniciado ao recarregar a partida, assim como o restante do progresso.
+
+## Prévia de bônus de mineração
+
+A barra de combo agora informa também quanto minério extra será recebido ao quebrar o **próximo** asteroide antes de acabar o tempo. O valor é calculado pelas regras determinísticas de recompensa, respeitando o limite máximo do multiplicador e sem modificar o estado da partida; a prévia só considera o bônus, não o minério base de cada rocha.
