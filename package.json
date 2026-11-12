@@ -1,0 +1,8 @@
+{
+  "name": "space-miner-2d",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Núcleo testável de mineração e entrega, ainda sem jogo 2D",
+  "scripts": {"test": "node --test", "demo": "node bin/demo.js"},
+  "engines": {"node": ">=20"}
+}

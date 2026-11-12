@@ -2,7 +2,7 @@
 
 Jogo espacial 2D **planejado**, com exploração de setores, coleta de minérios e evolução de naves.
 
-> **Estado na branch principal:** somente conceito documentado; o núcleo de código de outro PR ainda não foi integrado. O objetivo abaixo é um MVP futuro, não uma versão jogável.
+> **Estado desta branch:** lógica de mineração em JavaScript implementada e coberta por testes. Não há nave visual, mundo 2D ou build jogável.
 
 ## Vertical slice sugerida
 
@@ -26,9 +26,22 @@ Uma nave explora um mapa compacto de asteroides. O jogador aproxima-se de um ast
 ## Ordem de implementação
 
 - [ ] Escolher engine 2D e versionar dependências.
-- [ ] Escrever testes das regras de mineração e inventário.
+- [x] Escrever testes das regras de mineração e inventário.
 - [ ] Construir mapa e nave em assets temporários.
 - [ ] Adicionar HUD de carga/energia e loop de extração.
 - [ ] Documentar comandos de execução e controles após rodar localmente.
 
 Não anunciar modos online, geração procedural ou lançamento mobile antes de haver protótipos próprios para essas plataformas.
+
+## Núcleo demonstrativo implementado
+
+O arquivo `src/mineracao.js` contém regras de extração, capacidade de carga, estoque de asteroides e entrega na estação com saldo em créditos **fictícios**. As ações preservam as entradas originais, impedem coleta além da capacidade e rejeitam preços inválidos. A demonstração funciona em terminal, sem interface gráfica.
+
+Requer Node.js 20+, sem pacotes de terceiros:
+
+```bash
+npm test
+npm run demo
+```
+
+O workflow `.github/workflows/mining-tests.yml` executa os testes no PR. Movimento da nave, mapa, colisões, sprites, estações visuais e upgrades permanecem no planejamento.
