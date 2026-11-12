@@ -38,3 +38,20 @@ test("entradas inválidas e quantidades negativas são rejeitadas",()=>{
   assert.throws(()=>coletar(nave,asteroide,2),RangeError);
   assert.throws(()=>entregar(nave,null),TypeError);
 });
+
+test("nomes especiais de minerais nao herdam propriedades de Object",()=>{
+  let nave=criarNave(3);
+  const minerais=["__proto__","constructor","toString"];
+  for(const mineral of minerais) {
+    nave=coletar(nave,criarAsteroide({id:mineral,mineral,quantidade:1}),1).nave;
+  }
+  assert.equal(Object.getPrototypeOf(nave.carga),null);
+  assert.deepEqual(Object.values(nave.carga),[1,1,1]);
+  assert.equal(cargaTotal(nave),3);
+  const precos=Object.fromEntries(minerais.map((mineral,i)=>[mineral,(i+1)*10]));
+  const resultado=entregar(nave,precos);
+  assert.equal(resultado.credito,60);
+  assert.equal(resultado.nave.saldo,60);
+  assert.equal(cargaTotal(resultado.nave),0);
+  assert.equal(Object.getPrototypeOf(resultado.nave.carga),null);
+});
