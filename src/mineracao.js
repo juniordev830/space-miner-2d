@@ -13,7 +13,7 @@ function nome(value, descricao) {
 function criarNave(capacidade = 10) {
   positivo(capacidade, "Capacidade");
   if(capacidade>100000)throw new RangeError("Capacidade excessiva.");
-  return Object.freeze({capacidade, carga: Object.freeze({}), saldo: 0});
+  return Object.freeze({capacidade, carga: Object.freeze(Object.create(null)), saldo: 0});
 }
 function criarAsteroide({id, mineral, quantidade}) {
   id = nome(id, "ID");
@@ -28,7 +28,11 @@ function coletar(nave, asteroide, quantidade) {
   positivo(quantidade,"Quantidade a minerar");
   if(quantidade>asteroide.quantidade)throw new RangeError("Minério insuficiente.");
   if(cargaTotal(nave)+quantidade>nave.capacidade)throw new RangeError("Capacidade de carga excedida.");
-  const carga=Object.freeze({...nave.carga,[asteroide.mineral]:(nave.carga[asteroide.mineral]||0)+quantidade});
+  // Um mapa sem protótipo também permite minerais chamados "constructor" ou "__proto__".
+  const carga = Object.assign(Object.create(null), nave.carga);
+  const atual = Object.hasOwn(nave.carga, asteroide.mineral) ? nave.carga[asteroide.mineral] : 0;
+  carga[asteroide.mineral] = atual + quantidade;
+  Object.freeze(carga);
   return Object.freeze({
     nave:Object.freeze({...nave,carga}),
     asteroide:Object.freeze({...asteroide,quantidade:asteroide.quantidade-quantidade})
@@ -50,7 +54,7 @@ function entregar(nave, precos) {
   if(!Number.isSafeInteger(nave.saldo+credito))
     throw new RangeError("Saldo ultrapassou o limite de inteiro seguro.");
   return Object.freeze({
-    nave:Object.freeze({...nave,carga:Object.freeze({}),saldo:nave.saldo+credito}),
+    nave:Object.freeze({...nave,carga:Object.freeze(Object.create(null)),saldo:nave.saldo+credito}),
     credito
   });
 }
