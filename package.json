@@ -2,7 +2,20 @@
   "name": "space-miner-2d",
   "version": "0.1.0",
   "private": true,
-  "description": "Núcleo testável de mineração e entrega, ainda sem jogo 2D",
-  "scripts": {"test": "node --test", "demo": "node bin/demo.js"},
-  "engines": {"node": ">=20"}
+  "description": "Protótipo de mineração espacial em PixiJS e núcleo de demonstração no terminal",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "node --test",
+    "demo": "node bin/demo.js"
+  },
+  "dependencies": {
+    "pixi.js": "^8.0.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
 }
