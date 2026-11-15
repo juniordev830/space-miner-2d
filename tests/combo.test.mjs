@@ -9,7 +9,7 @@ import {
   comboHudLabel,
   COMBO_WINDOW_SECONDS,
   MAX_COMBO_STREAK
-} from '../src/combo.js';
+} from '../src/combo.mjs';
 
 test('first and second asteroids award normal ore without bonus', () => {
   const first = awardMiningCombo({ streak: 0, secondsRemaining: 0 }, 3);

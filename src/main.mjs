@@ -1,6 +1,6 @@
 import { Application, Container, Graphics } from 'pixi.js';
-import { clamp, distance, inMiningRange, mineHit, canUpgrade } from './rules.js';
-import { advanceCombo, awardMiningCombo, formatCombo, comboHudLabel } from './combo.js';
+import { clamp, distance, inMiningRange, mineHit, canUpgrade } from './rules.mjs';
+import { advanceCombo, awardMiningCombo, formatCombo, comboHudLabel } from './combo.mjs';
 import './style.css';
 
 const app = new Application();

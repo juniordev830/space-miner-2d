@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { clamp, distance, inMiningRange, mineHit, canUpgrade } from '../src/rules.js';
+import { clamp, distance, inMiningRange, mineHit, canUpgrade } from '../src/rules.mjs';
 
 test('clamp keeps ship inside valid bounds', () => {
   assert.equal(clamp(-4, 0, 50), 0);
