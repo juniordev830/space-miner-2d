@@ -1,5 +1,7 @@
 # Space Miner 2D
 
+**Navegação** · [Protótipo visual em PixiJS](#protótipo-visual-em-pixijs) · [Núcleo de mineração no terminal](#núcleo-de-mineração-no-terminal) · [Código e estudo](docs/ENGENHARIA_REVERSA.md)
+
 ## Protótipo visual em PixiJS
 
 **Status:** MVP inicial de jogo no navegador, com gráficos feitos em **PixiJS 8** e empacotamento pelo Vite.
@@ -94,3 +96,9 @@ npm run demo
 ```
 
 O workflow `.github/workflows/mining-tests.yml` executa os testes no PR. Movimento da nave, mapa, colisões, sprites, estações visuais e upgrades permanecem no planejamento.
+
+## Código e roteiro de estudo
+
+Como testar o limite de tempo de um combo sem esperar em tempo real? O [guia de engenharia reversa](docs/ENGENHARIA_REVERSA.md) reúne o mapa dos módulos e uma pergunta técnica baseada no projeto.
+
+Mantido por [João Junior](https://github.com/juniordev830).
